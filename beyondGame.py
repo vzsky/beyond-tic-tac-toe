@@ -10,4 +10,3 @@ p2 = P2NeverLosePlayer(gameDimension)
 compet = Competition([random, p2], gameDimension)
 compet.run(500)
 # expected sth like [0, 125, 375]
-minimax = FastMiniMaxPlayer(gameDimension, 'beyondFastMnmx.ch', False)

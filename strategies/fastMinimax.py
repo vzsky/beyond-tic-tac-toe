@@ -11,6 +11,7 @@ loading up minimax tree everytime
 This player doesn't know symmetry so symmetric boards are treated differently 
 This would need to search 2 billions nodes for a (3, 3, 5, 1)
 and definitely more than 26 millions which took hours
+This player cares about states, so don't compete with its own object
 """
 class FastMiniMaxPlayer (Player) :
 
