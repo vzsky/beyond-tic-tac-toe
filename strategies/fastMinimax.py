@@ -5,8 +5,14 @@ import pickle
 
 """
 This player search minimax and only play optimally
+This search only 18k nodes for normal game
+This player can store and load cache so it's not neccessary 
+loading up minimax tree everytime
+This player doesn't know symmetry so symmetric boards are treated differently 
+This would need to search 2 billions nodes for a (3, 3, 5, 1)
+and definitely more than 26 millions which took hours
 """
-class BetterMiniMaxPlayer (Player) :
+class FastMiniMaxPlayer (Player) :
 
   stateMap = {}
 
@@ -23,7 +29,7 @@ class BetterMiniMaxPlayer (Player) :
  
   def makeMiniMaxTree (self, node) :
     self.nodeCounter += 1
-    if self.nodeCounter % 10000 == 0 :
+    if self.nodeCounter % 50000 == 0 :
       print(self.nodeCounter, "nodes")
       
     if (node.state.id in self.stateMap):
