@@ -3,6 +3,8 @@ from player import Player
 
 """
 This player search minimax heuristically
+running time of finding a best move is (Possible_Move)^Depth
+for (a, a, b, c) game it's bounded by (a*a*b)^depth
 """
 class HeuristicMiniMaxPlayer (Player) :
 

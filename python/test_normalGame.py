@@ -1,4 +1,5 @@
-from competition import Competition
+from python.competition import Competition
+from strategies.heuristics import getBasicHeuristic
 from strategies.randomPlayer import RandomPlayer
 from strategies.minimax import MiniMaxPlayer
 from strategies.fastMinimax import FastMiniMaxPlayer
@@ -6,19 +7,13 @@ from strategies.heuristicMinimax import HeuristicMiniMaxPlayer
 
 normalTicTacToeGameDim = (3, 3, 1, 9)
 
+heuristic = getBasicHeuristic(normalTicTacToeGameDim, 2, 1)
+
 random = RandomPlayer(normalTicTacToeGameDim)
 minimax1 = MiniMaxPlayer(normalTicTacToeGameDim, 'normalMiniMax.ch')
 minimax2 = FastMiniMaxPlayer(normalTicTacToeGameDim, 'normalBetterMnmx.ch')
 
-def hueristic (gameState) :
-  boardValue = gameState.board.sum()
-  stackValue = 0
-  for i in range(gameState.gameDimension[2]):
-    stackValue += i*gameState.stacks[0][i]
-    stackValue -= i*gameState.stacks[1][i]
-  return (2*boardValue + stackValue)/100
-
-hmnmx = HeuristicMiniMaxPlayer(normalTicTacToeGameDim, 2, hueristic)
+hmnmx = HeuristicMiniMaxPlayer(normalTicTacToeGameDim, 2, heuristic)
 
 # compet = Competition([random, minimax1], normalTicTacToeGameDim)
 # compet.run(500)
