@@ -1,10 +1,11 @@
-mod game;
-mod game_components;
-use game::Board;
-use game_components::Action;
-use game_components::Player;
+use crate::game::Board;
+use crate::game::Game;
+use crate::game_components::Action;
+use crate::game_components::Player;
 
-fn main () {
+use crate::strategies::first_action_player::FirstActionPlayer;
+
+pub fn test () {
   println!("my first rust program");
 
   let player = Player::X;
@@ -26,5 +27,11 @@ fn main () {
   board.perform_move(Action::new(0, 2, 3));
   assert!(board.is_ended());
 
+  let p1 = FirstActionPlayer::new();
+  let p2 = FirstActionPlayer::new();
+  let mut game: Game = Game::new(Box::new(p1), Box::new(p2));
+  let result = game.run();
+  assert!(result == 0); // the game is drawed
+
   println!("is running without error!!!")
-} 
+}

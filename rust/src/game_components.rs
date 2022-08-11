@@ -1,4 +1,5 @@
 use std::fmt;
+use crate::game::Board;
 
 #[derive(PartialEq, Copy, Clone)]
 pub enum Player {
@@ -21,6 +22,11 @@ impl Player {
   }
 }
 
+pub trait Playable {
+  fn get_next_move (&self, board:&Board) -> Action;
+}
+
+#[derive(Copy, Clone)]
 pub struct Action {
   pub row: usize,
   pub col: usize,

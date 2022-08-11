@@ -2,9 +2,10 @@ const BOARD_SIZE:usize = 3;
 const STACK_AMOUNT:usize = 1;
 const STACK_SIZE:usize = 5;
 
-use game_components::Action;
-use game_components::Cell;
-use game_components::Player;
+use crate::game_components::Action;
+use crate::game_components::Cell;
+use crate::game_components::Player;
+use crate::game_components::Playable;
 
 pub struct Board {
   now_player : Player,
@@ -108,6 +109,42 @@ impl Board {
       return true;
     }
     self.is_drawed()
+  }
+
+}
+
+pub struct Game {
+  pub players: [Box<dyn Playable>; 2], 
+  pub board: Board,
+}
+
+impl Game {
+
+  pub fn new (
+    p1: Box<dyn Playable>, 
+    p2: Box<dyn Playable>,
+  ) -> Game {
+    Game {
+      players: [p1, p2],
+      board: Board::new(Player::X),
+    }
+  }
+
+  pub fn run (&mut self) -> i32 {
+    loop {
+      let index = self.board.now_player.number();
+      let action = self.players[index].get_next_move(&self.board);
+      self.board.perform_move(action);
+      
+      if self.board.is_ended() {
+        if let Some(player) = self.board.get_winner() {
+          if player == Player::X { return 1; }
+          if player == Player::O { return -1; }
+        }
+        assert!(self.board.is_drawed());
+        return 0;
+      }
+    }
   }
 
 }
