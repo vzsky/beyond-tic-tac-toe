@@ -1,43 +1,37 @@
+pub const BOARD_SIZE:usize = 3;
+pub const STACK_AMOUNT:usize = 1;
+pub const STACK_SIZE:usize = 5;
+
 mod game;
 mod game_components;
 mod strategies {
   pub mod first_action_player;
   pub mod random_player;
   pub mod heuristic_player;
+
+  pub mod heuristic;
 }
 
 mod test;
 
-fn heuristic (board: &game::Board) -> i32 {
-  let mut board_value: i32 = 0;
-  let mut stack_value: i32 = 0;
-  for i in 0..game::BOARD_SIZE {
-    for j in 0..game::BOARD_SIZE {
-      let cell_size:i32 = (board.cells[i][j].size).try_into().unwrap();
-      if let Some(player) = board.cells[i][j].owner {
-        if player == board.now_player {
-          board_value += cell_size;
-        } else {
-          board_value -= cell_size;
-        }
-      }
-    }
-  }
-  for i in 0..game::STACK_SIZE {
-    let my_stack:i32 = (i*board.stacks[board.now_player.number()][i]).try_into().unwrap();
-    let op_stack:i32 = (i*board.stacks[board.now_player.opponent().number()][i]).try_into().unwrap();
-    stack_value += my_stack;
-    stack_value -= op_stack;
-  }
-  // here divider is a very loose upper bound, lower this will help;
-  let divider: i32 = (2*(game::BOARD_SIZE*game::BOARD_SIZE)*game::STACK_SIZE + game::STACK_AMOUNT*game::STACK_SIZE).try_into().unwrap();
-  (2*board_value + stack_value) / divider
-}
-
 fn main () {
   test::test();
-  let p1 = strategies::first_action_player::FirstActionPlayer::boxed_new();
-  let p2 = strategies::heuristic_player::HeuristicPlayer::boxed_new(&heuristic);
+  let p1 = strategies::random_player::RandomPlayer::boxed_new();
+  let p2 = strategies::heuristic_player::HeuristicPlayer::boxed_new(&strategies::heuristic::heuristic);
   let mut game = game::Game::new(p1, p2);
-  println!("{}", game.run());
+
+  let mut win = 0;
+  let mut lose = 0;
+  let mut draw = 0;
+
+  for i in 0..500 {
+    match game.run() {
+      0  => {draw += 1;},
+      1  => {win  += 1;},
+      -1 => {lose += 1;},
+      _  => {},
+    }
+    game.reset();
+  }
+  print!("w{} d{} l{}", win, draw, lose);
 } 

@@ -9,10 +9,9 @@ pub fn test () {
   println!("my first rust program");
 
   let player = Player::X;
-  assert!(format!("{}", player) == "Player X");
-  assert!(format!("{}", player.opponent()) == "Player O");
+  assert!(format!("{}", player) == "X");
+  assert!(format!("{}", player.opponent()) == "O");
   let mut board = Board::new(player);
-  assert!(board.all_actions().len() == 36);
   assert!(!board.is_drawed());
   assert!(!board.is_ended());
   assert!(board.is_legal_action(Action::new(0, 0, 5)));

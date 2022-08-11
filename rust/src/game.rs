@@ -1,11 +1,12 @@
-pub const BOARD_SIZE:usize = 3;
-pub const STACK_AMOUNT:usize = 1;
-pub const STACK_SIZE:usize = 5;
+use crate::BOARD_SIZE;
+use crate::STACK_AMOUNT;
+use crate::STACK_SIZE;
 
 use crate::game_components::Action;
 use crate::game_components::Cell;
 use crate::game_components::Player;
 use crate::game_components::Playable;
+
 
 #[derive(Copy, Clone)]
 pub struct Board {
@@ -52,7 +53,7 @@ impl Board {
     let mut actions = Vec::new();
     for i in 0..BOARD_SIZE {
       for j in 0..BOARD_SIZE {
-        for k in 1..STACK_SIZE {
+        for k in 1..=STACK_SIZE {
           if self.is_legal_action(Action::new(i, j, k)) {
             actions.push(Action::new(i, j, k));
           }
@@ -122,6 +123,15 @@ impl Board {
     return 0;
   }
 
+  pub fn print_board (&self) {
+    for i in 0..BOARD_SIZE {
+      for j in 0..BOARD_SIZE {
+        print!("|{}|", self.cells[i][j]);
+      }
+      println!();
+    }
+    println!();
+  }
 }
 
 pub struct Game {
@@ -141,6 +151,10 @@ impl Game {
       board: Board::new(Player::X),
       first_player: Player::X
     }
+  }
+
+  pub fn reset (&mut self) {
+    self.board = Board::new(Player::X);
   }
 
   pub fn run (&mut self) -> i32 {

@@ -63,8 +63,8 @@ impl Cell {
 impl fmt::Display for Player {
   fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     match *self {
-      Player::X => write!(f, "Player X"),
-      Player::O => write!(f, "Player O"),
+      Player::X => write!(f, "X"),
+      Player::O => write!(f, "O"),
     }
   }
 }
@@ -72,5 +72,14 @@ impl fmt::Display for Player {
 impl fmt::Display for Action {
   fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     write!(f, "(r{}, c{}, s{}) ", self.row, self.col, self.size)
+  }
+}
+
+impl fmt::Display for Cell {
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    if let Some(player) = self.owner {
+      return write!(f, "{}{}", player, self.size);
+    }
+    write!(f, "__")
   }
 }
