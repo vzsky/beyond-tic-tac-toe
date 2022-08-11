@@ -17,8 +17,8 @@ impl FirstActionPlayer {
 }
 
 impl Playable for FirstActionPlayer {
-  fn get_next_move (&self, board:&Board) -> Action {
-    let all_moves = board.all_moves();
-    all_moves[0]
+  fn get_next_action (&self, board:&Board) -> Action {
+    let all_actions = board.all_actions();
+    all_actions[0]
   }
 }

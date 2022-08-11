@@ -23,7 +23,7 @@ impl Player {
 }
 
 pub trait Playable {
-  fn get_next_move (&self, board:&Board) -> Action;
+  fn get_next_action (&self, board:&Board) -> Action;
 }
 
 #[derive(Copy, Clone)]
