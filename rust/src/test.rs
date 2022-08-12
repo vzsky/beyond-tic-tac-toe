@@ -1,5 +1,6 @@
 use crate::game::Board;
 use crate::game::Game;
+use crate::game_components::Result;
 use crate::game_components::Action;
 use crate::game_components::Player;
 
@@ -29,8 +30,8 @@ pub fn test () {
   let p1 = FirstActionPlayer::new();
   let p2 = FirstActionPlayer::new();
   let mut game: Game = Game::new(Box::new(p1), Box::new(p2));
-  let result = game.run();
-  assert!(result == 0); // the game is drawed
+  let result = game.runs(1);
+  assert!(result == Result { win:0, draw:1, lose:0 });
 
   println!("is running without error!!!")
 }

@@ -9,12 +9,13 @@ def maxStackValue (gameDimension) :
   return sum([item for sublist in stack for item in sublist])
 
 def getBasicHeuristic (dim, alpha, beta) :
-  divider = (alpha*maxBoardValue(dim) + beta*maxStackValue(dim)) # this is a loose upper bound
+  # divider = (alpha*maxBoardValue(dim) + beta*maxStackValue(dim)) # this is a loose upper bound
+  divider = 100
   def heuristic (gameState) :
     boardValue = gameState.board.sum()
     stackValue = 0
     for i in range(gameState.gameDimension[2]):
-      stackValue += i*gameState.stacks[0][i]
-      stackValue -= i*gameState.stacks[1][i]
+      stackValue += i*gameState.stacks[gameState.playing][i]
+      stackValue -= i*gameState.stacks[gameState.playing^1][i]
     return (alpha*boardValue + beta*stackValue)/divider
   return heuristic

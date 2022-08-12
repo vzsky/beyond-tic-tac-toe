@@ -6,6 +6,7 @@ use crate::game_components::Action;
 use crate::game_components::Cell;
 use crate::game_components::Player;
 use crate::game_components::Playable;
+use crate::game_components::Result;
 
 
 #[derive(Copy, Clone)]
@@ -153,11 +154,11 @@ impl Game {
     }
   }
 
-  pub fn reset (&mut self) {
+  fn reset (&mut self) {
     self.board = Board::new(Player::X);
   }
 
-  pub fn run (&mut self) -> i32 {
+  fn run (&mut self) -> i32 {
     loop {
       let index = self.board.now_player.number();
       let action = self.players[index].get_next_action(&self.board);
@@ -169,4 +170,27 @@ impl Game {
     }
   }
 
+  pub fn runs (&mut self, times: i32) -> Result {
+    let mut result = Result::new();
+    for _ in 0..times {
+      result.count(self.run());
+      self.reset();
+    }
+    result
+  }
+
+  pub fn inverse_runs (&mut self, times: i32) -> Result {
+    self.players.reverse();
+    let mut result = self.runs(times);
+    self.players.reverse();
+    result.inverse();
+    result
+  }
+
+  pub fn full_runs (&mut self, times: i32) -> Result {
+    let mut result = Result::new();
+    result += self.runs(times);
+    result += self.inverse_runs(times);
+    result
+  }
 }

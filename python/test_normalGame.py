@@ -1,4 +1,4 @@
-from python.competition import Competition
+from competition import Competition
 from strategies.heuristics import getBasicHeuristic
 from strategies.randomPlayer import RandomPlayer
 from strategies.minimax import MiniMaxPlayer

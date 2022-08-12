@@ -1,4 +1,4 @@
-from python.competition import Competition
+from competition import Competition
 from strategies.heuristics import getBasicHeuristic
 from strategies.randomPlayer import RandomPlayer
 from strategies.P2DrawPlayer import P2NeverLosePlayer
@@ -24,11 +24,11 @@ hmnmx = HeuristicMiniMaxPlayer(gameDimension, 2, heuristic)
 # compet.run(10)
 # # expected [0, 0, 10] deterministic
 
-# compet = Competition([hmnmx, random], gameDimension)
-# compet.run(500)
-# # expected sth like [392, 15, 93]
+compet = Competition([hmnmx, random], gameDimension)
+compet.run(500)
+# expected sth like [392, 15, 93]
 
-# compet = Competition([random, hmnmx], gameDimension)
-# compet.run(500)
-# # expected sth like [230, 112, 158]
-# # not a good first player
+compet = Competition([random, hmnmx], gameDimension)
+compet.run(500)
+# expected sth like [244, 94, 162]
+# a bad second player
