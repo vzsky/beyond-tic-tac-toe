@@ -15,16 +15,18 @@ impl ActionEval {
   }
 }
 
+// Hueristic Player takes a function of heuristic and do a minimax search of depth 2 with the provided hueristic.
+
 pub struct HeuristicPlayer<'a> {
   heuristic: &'a dyn Fn(&Board) -> f64,
 }
 impl<'a> HeuristicPlayer<'a> {
-  pub fn new (heuristic: &'a dyn Fn(&Board) -> f64) -> HeuristicPlayer {
+  pub fn new (heuristic: &'a dyn Fn(&Board) -> f64) -> HeuristicPlayer<'a> {
     HeuristicPlayer {
       heuristic
     }
   }
-  pub fn boxed_new (heuristic: &'a dyn Fn(&Board) -> f64) -> Box<HeuristicPlayer> {
+  pub fn boxed_new (heuristic: &'a dyn Fn(&Board) -> f64) -> Box<HeuristicPlayer<'a>> {
     Box::new(Self::new(heuristic))
   }
 

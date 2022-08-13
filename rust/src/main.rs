@@ -11,6 +11,7 @@ mod strategies {
   pub mod first_action_player;
   pub mod random_player;
   pub mod heuristic_player;
+  pub mod p2_draw_player;
 
   pub mod heuristic;
 }
@@ -24,7 +25,9 @@ fn main () {
   let ran2 = strategies::random_player::RandomPlayer::boxed_new();
   let heu1 = strategies::heuristic_player::HeuristicPlayer::boxed_new(&strategies::heuristic::heuristic1);
   let heu2 = strategies::heuristic_player::HeuristicPlayer::boxed_new(&strategies::heuristic::heuristic2);
-  
+  let p2d1 = strategies::p2_draw_player::P2DrawPlayer::boxed_new();
+
+
   // we really only cares about p1 strategies since p2 can force a draw
   let mut game = game::Game::new(heu1, ran1);
   let game_result = game.runs(500);

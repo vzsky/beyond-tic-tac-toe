@@ -5,6 +5,8 @@ use crate::game_components::Action;
 use crate::game_components::Player;
 
 use crate::strategies::first_action_player::FirstActionPlayer;
+use crate::strategies::random_player::RandomPlayer;
+use crate::strategies::p2_draw_player::P2DrawPlayer;
 
 pub fn test () {
   println!("my first rust program");
@@ -32,6 +34,12 @@ pub fn test () {
   let mut game: Game = Game::new(Box::new(p1), Box::new(p2));
   let result = game.runs(1);
   assert!(result == Result { win:0, draw:1, lose:0 });
+
+  let ran = RandomPlayer::boxed_new();
+  let p2d = P2DrawPlayer::boxed_new();
+  let mut game: Game = Game::new(ran, p2d);
+  let result = game.runs(100);
+  assert!(result.win == 0);
 
   println!("is running without error!!!")
 }
